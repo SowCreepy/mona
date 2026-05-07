@@ -1,4 +1,4 @@
-import { Box, Typography, CircularProgress, IconButton } from '@mui/material';
+import { Box, Typography, CircularProgress, IconButton, Snackbar, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { useInvitationViewModel } from '../../viewmodels/useInvitationViewModel';
@@ -6,7 +6,7 @@ import InvitationCard from '../components/InvitationCard';
 
 export default function InvitationsSent() {
   const navigate = useNavigate();
-  const { sent, loading } = useInvitationViewModel();
+  const { sent, loading, cancel, error } = useInvitationViewModel();
 
   if (loading) {
     return <Box sx={{ display: 'flex', justifyContent: 'center', pt: 8 }}><CircularProgress sx={{ color: '#7C6FFF' }} /></Box>;
@@ -35,10 +35,15 @@ export default function InvitationsSent() {
             key={inv.id}
             invitation={inv}
             type="sent"
+            onCancel={cancel}
             onChat={(chatId) => navigate(`/app/chat/${chatId}`)}
           />
         ))
       )}
+
+      <Snackbar open={!!error} autoHideDuration={4000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>
     </Box>
   );
 }

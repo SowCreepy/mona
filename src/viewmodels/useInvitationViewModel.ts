@@ -7,6 +7,7 @@ export function useInvitationViewModel() {
   const [sent, setSent] = useState<Invitation[]>([]);
   const [received, setReceived] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchSent = useCallback(async () => {
     const data = await invitationService.getSent();
@@ -35,6 +36,16 @@ export function useInvitationViewModel() {
     setReceived((prev) => prev.filter((inv) => inv.id !== id));
   }, []);
 
+  const cancel = useCallback(async (id: string) => {
+    try {
+      await invitationService.cancel(id);
+      setSent((prev) => prev.filter((inv) => inv.id !== id));
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : 'Erreur lors de la suppression';
+      setError(msg);
+    }
+  }, []);
+
   useEffect(() => {
     fetchAll();
 
@@ -57,5 +68,5 @@ export function useInvitationViewModel() {
     };
   }, [fetchAll, fetchSent]);
 
-  return { sent, received, loading, accept, reject, fetchAll };
+  return { sent, received, loading, error, accept, reject, cancel, fetchAll };
 }

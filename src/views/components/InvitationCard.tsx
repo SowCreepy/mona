@@ -2,6 +2,7 @@ import { Card, CardContent, Typography, Box, IconButton, Chip } from '@mui/mater
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import ChatIcon from '@mui/icons-material/Chat';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlined';
 import type { Invitation } from '../../models/Invitation';
 import PlayerAvatar from './PlayerAvatar';
 import RankBadge from './RankBadge';
@@ -11,10 +12,11 @@ interface InvitationCardProps {
   type: 'sent' | 'received';
   onAccept?: (id: string) => void;
   onReject?: (id: string) => void;
+  onCancel?: (id: string) => void;
   onChat?: (chatId: string) => void;
 }
 
-export default function InvitationCard({ invitation, type, onAccept, onReject, onChat }: InvitationCardProps) {
+export default function InvitationCard({ invitation, type, onAccept, onReject, onCancel, onChat }: InvitationCardProps) {
   const player = type === 'sent' ? invitation.receiver : invitation.sender;
   if (!player) return null;
 
@@ -39,6 +41,11 @@ export default function InvitationCard({ invitation, type, onAccept, onReject, o
             {invitation.status === 'ACCEPTED' && invitation.chatId && (
               <IconButton size="small" onClick={() => onChat?.(invitation.chatId!)} sx={{ color: '#7C6FFF' }}>
                 <ChatIcon />
+              </IconButton>
+            )}
+            {invitation.status === 'PENDING' && (
+              <IconButton size="small" onClick={() => onCancel?.(invitation.id)} sx={{ color: '#FF5252' }}>
+                <DeleteOutlineIcon />
               </IconButton>
             )}
           </Box>

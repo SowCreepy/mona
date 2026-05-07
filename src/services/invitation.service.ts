@@ -25,4 +25,8 @@ export const invitationService = {
   async reject(id: string): Promise<void> {
     await api.patch(`/invitations/${id}/reject`);
   },
+
+  async cancel(id: string): Promise<void> {
+    await api.delete(`/invitations/${id}`);
+  },
 };
