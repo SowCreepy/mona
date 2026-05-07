@@ -1,4 +1,5 @@
-import { Box, Typography, CircularProgress } from '@mui/material';
+import { Box, Typography, CircularProgress, IconButton } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { useInvitationViewModel } from '../../viewmodels/useInvitationViewModel';
 import InvitationCard from '../components/InvitationCard';
@@ -13,9 +14,14 @@ export default function InvitationsSent() {
 
   return (
     <Box sx={{ p: { xs: 2, md: 0 }, pb: { xs: 10, md: 2 } }}>
-      <Typography variant="h5" sx={{ fontWeight: 700, color: 'white', mb: 3 }}>
-        Invitations envoyées
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
+        <IconButton onClick={() => navigate('/app/profile')} sx={{ color: '#7C6FFF', ml: -1 }}>
+          <ArrowBackIcon />
+        </IconButton>
+        <Typography variant="h5" sx={{ fontWeight: 700, color: 'white' }}>
+          Invitations envoyées
+        </Typography>
+      </Box>
 
       {sent.length === 0 ? (
         <Box sx={{ textAlign: 'center', pt: 8 }}>

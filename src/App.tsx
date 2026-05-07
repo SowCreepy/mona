@@ -43,9 +43,9 @@ export default function App() {
               <Route path="matchmaking" element={<Matchmaking />} />
               <Route path="chat/:chatId" element={<ChatRoom />} />
               <Route path="add-match" element={<AddMatch />} />
+              <Route path="invitations" element={<InvitationsSent />} />
             </Route>
             <Route path="edit-profile" element={<EditProfile />} />
-            <Route path="invitations" element={<InvitationsSent />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />
