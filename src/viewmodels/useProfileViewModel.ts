@@ -22,14 +22,18 @@ export function useProfileViewModel() {
   }, [updateUser]);
 
   const toggleAvailability = useCallback(async () => {
+    if (!user) return;
+    const prev = user.isAvailable;
+    updateUser({ isAvailable: !prev }); 
     try {
-      const { isAvailable } = await playerService.toggleAvailability();
+      const { isAvailable } = await playerService.toggleAvailability(!prev);
       updateUser({ isAvailable });
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : 'Erreur';
+      updateUser({ isAvailable: prev }); 
+      const msg = e instanceof Error ? e.message : 'Erreur lors du changement de disponibilité';
       setError(msg);
     }
-  }, [updateUser]);
+  }, [updateUser, user]);
 
   const refresh = useCallback(async () => {
     setLoading(true);

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Box, Typography, Button, Stack, IconButton, CircularProgress, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography, Button, Stack, IconButton, CircularProgress, useMediaQuery, useTheme, Snackbar, Alert } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
@@ -16,7 +16,7 @@ import AvailabilityToggle from '../components/AvailabilityToggle';
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { user, toggleAvailability } = useProfileViewModel();
+  const { user, toggleAvailability, error } = useProfileViewModel();
   const { matches, fetchMatches } = useMatchViewModel();
   const logout = useAuthStore((s) => s.logout);
   const theme = useTheme();
@@ -116,6 +116,10 @@ export default function Profile() {
           </Stack>
         </Box>
       </Box>
+
+      <Snackbar open={!!error} autoHideDuration={4000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>
     </Box>
   );
 }

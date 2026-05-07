@@ -12,8 +12,8 @@ export const playerService = {
     return data;
   },
 
-  async toggleAvailability(): Promise<{ isAvailable: boolean }> {
-    const { data } = await api.patch('/players/me/availability');
+  async toggleAvailability(isAvailable: boolean): Promise<{ isAvailable: boolean }> {
+    const { data } = await api.patch('/players/me/availability', { isAvailable });
     return data;
   },
 
