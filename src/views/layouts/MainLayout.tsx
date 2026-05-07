@@ -25,10 +25,11 @@ export default function MainLayout() {
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   const currentTab = tabs.findIndex((t) => location.pathname.startsWith(t.path));
+  const isChat = /\/chat\//.test(location.pathname);
 
   if (isDesktop) {
     return (
-      <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+      <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
         <Drawer
           variant="permanent"
           sx={{
@@ -68,11 +69,47 @@ export default function MainLayout() {
           </List>
         </Drawer>
 
-        <Box sx={{ flex: 1, minHeight: '100vh', overflow: 'auto' }}>
-          <Box sx={{ maxWidth: 1200, mx: 'auto', p: { md: 3, lg: 4 } }}>
+        {isChat ? (
+          <Box sx={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
             <Outlet />
           </Box>
+        ) : (
+          <Box sx={{ flex: 1, overflowY: 'auto' }}>
+            <Box sx={{ maxWidth: 1200, mx: 'auto', p: { md: 3, lg: 4 } }}>
+              <Outlet />
+            </Box>
+          </Box>
+        )}
+      </Box>
+    );
+  }
+
+  const bottomNav = (
+    <Paper elevation={8} sx={{ flexShrink: 0 }}>
+      <BottomNavigation
+        value={currentTab >= 0 ? currentTab : 0}
+        onChange={(_, idx) => navigate(tabs[idx].path)}
+        sx={{
+          bgcolor: '#0F0F1A',
+          borderTop: '1px solid #1A1A2E',
+          '& .Mui-selected': { color: '#7C6FFF !important' },
+          '& .MuiBottomNavigationAction-root': { color: '#666' },
+        }}
+      >
+        {tabs.map((tab) => (
+          <BottomNavigationAction key={tab.label} label={tab.label} icon={tab.icon} />
+        ))}
+      </BottomNavigation>
+    </Paper>
+  );
+
+  if (isChat) {
+    return (
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+        <Box sx={{ flex: 1, overflow: 'hidden' }}>
+          <Outlet />
         </Box>
+        {bottomNav}
       </Box>
     );
   }

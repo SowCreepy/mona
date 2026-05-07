@@ -41,10 +41,10 @@ export default function App() {
               <Route path="search" element={<SearchLast />} />
               <Route path="messages" element={<Messages />} />
               <Route path="matchmaking" element={<Matchmaking />} />
+              <Route path="chat/:chatId" element={<ChatRoom />} />
             </Route>
             <Route path="edit-profile" element={<EditProfile />} />
             <Route path="add-match" element={<AddMatch />} />
-            <Route path="chat/:chatId" element={<ChatRoom />} />
             <Route path="invitations" element={<InvitationsSent />} />
           </Route>
 

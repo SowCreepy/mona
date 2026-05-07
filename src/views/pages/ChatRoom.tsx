@@ -28,7 +28,7 @@ export default function ChatRoom() {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 2, borderBottom: '1px solid #1A1A2E' }}>
         <IconButton onClick={() => navigate('/app/messages')} sx={{ color: '#7C6FFF' }}>
           <ArrowBackIcon />
