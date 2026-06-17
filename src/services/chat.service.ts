@@ -18,4 +18,8 @@ export const chatService = {
     });
     return data;
   },
+
+  async deleteChat(chatId: string): Promise<void> {
+    await api.delete(`/chats/${chatId}`);
+  },
 };
