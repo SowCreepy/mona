@@ -18,4 +18,9 @@ export const matchService = {
     const { data } = await api.get('/matches/me');
     return data;
   },
+
+  async getByPlayerId(playerId: string): Promise<MatchResult[]> {
+    const { data } = await api.get(`/players/${playerId}/matches`);
+    return data;
+  },
 };

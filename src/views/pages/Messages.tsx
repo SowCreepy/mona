@@ -47,7 +47,7 @@ export default function Messages() {
 
           return (
             <Card key={chat.id} sx={{ bgcolor: '#1A1A2E', borderRadius: 3, mb: 1.5 }}>
-              <CardActionArea onClick={() => navigate(`/app/chat/${chat.id}`)}>
+              <CardActionArea onClick={() => navigate(`/app/chat/${chat.id}`, { state: { otherParticipant: other } })}>
                 <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 1.5, '&:last-child': { pb: 1.5 } }}>
                   <PlayerAvatar
                     username={other?.username ?? '??'}

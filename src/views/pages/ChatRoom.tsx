@@ -6,11 +6,12 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useChatRoomViewModel } from '../../viewmodels/useChatViewModel';
 import { useAuthStore } from '../../stores/authStore';
+import PlayerAvatar from '../components/PlayerAvatar';
 
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const navigate = useNavigate();
-  const { messages, loading, sendMessage } = useChatRoomViewModel(chatId!);
+  const { messages, loading, sendMessage, otherParticipant } = useChatRoomViewModel(chatId!);
   const userId = useAuthStore((s) => s.user?.id);
   const [input, setInput] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -33,7 +34,24 @@ export default function ChatRoom() {
         <IconButton onClick={() => navigate('/app/messages')} sx={{ color: '#7C6FFF' }}>
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h6" sx={{ fontWeight: 600, color: 'white' }}>Chat</Typography>
+        {otherParticipant ? (
+          <Box
+            onClick={() => navigate(`/app/player/${otherParticipant.id}`)}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1.5, cursor: 'pointer', flex: 1 }}
+          >
+            <PlayerAvatar username={otherParticipant.username} rank={otherParticipant.rank} size={36} avatarUrl={otherParticipant.avatarUrl} />
+            <Box>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, color: 'white', lineHeight: 1.2 }}>
+                {otherParticipant.username}
+              </Typography>
+              <Typography variant="caption" sx={{ color: '#7C6FFF' }}>
+                Voir le profil
+              </Typography>
+            </Box>
+          </Box>
+        ) : (
+          <Typography variant="h6" sx={{ fontWeight: 600, color: 'white' }}>Chat</Typography>
+        )}
       </Box>
 
       <Box sx={{ flex: 1, overflowY: 'auto', p: 2 }}>

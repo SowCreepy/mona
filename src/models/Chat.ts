@@ -1,7 +1,7 @@
 export interface Chat {
   id: string;
   createdAt: string;
-  participants: { id: string; username: string; rank: string }[];
+  participants: { id: string; username: string; rank: string; avatarUrl?: string | null }[];
   messages: Message[];
   lastMessage?: Message | null;
 }

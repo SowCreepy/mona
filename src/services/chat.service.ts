@@ -7,6 +7,11 @@ export const chatService = {
     return data;
   },
 
+  async getById(chatId: string): Promise<Chat> {
+    const { data } = await api.get(`/chats/${chatId}`);
+    return data;
+  },
+
   async getMessages(chatId: string, page = 1, limit = 50): Promise<Message[]> {
     const { data } = await api.get(`/chats/${chatId}/messages`, {
       params: { page, limit },
