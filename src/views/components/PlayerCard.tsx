@@ -1,4 +1,5 @@
-import { Card, CardContent, Typography, Box, Stack } from '@mui/material';
+import { Button, Card, CardContent, Typography, Box, Stack } from '@mui/material';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import type { Player } from '../../models/Player';
 import PlayerAvatar from './PlayerAvatar';
 import RankBadge from './RankBadge';
@@ -44,13 +45,17 @@ export default function PlayerCard({ player }: PlayerCardProps) {
         </Stack>
 
         {player.steamUrl && (
-          <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ display: 'block', textAlign: 'center', mt: 2 }}
+          <Button
+            variant="outlined"
+            startIcon={<SportsEsportsIcon />}
+            href={player.steamUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            fullWidth
+            sx={{ mt: 2, borderColor: '#4a90d9', color: '#4a90d9' }}
           >
-            Steam: {player.steamUrl}
-          </Typography>
+            Profil Steam
+          </Button>
         )}
       </CardContent>
     </Card>

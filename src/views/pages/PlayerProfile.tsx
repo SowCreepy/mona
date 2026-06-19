@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Box, CircularProgress, IconButton, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, CircularProgress, IconButton, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import { useNavigate, useParams } from 'react-router-dom';
 import { playerService } from '../../services/player.service';
 import type { Player, MatchResult } from '../../models/Player';
@@ -80,9 +81,16 @@ export default function PlayerProfile() {
             Niveau {player.level} · ELO {player.elo}
           </Typography>
           {player.steamUrl && (
-            <Typography variant="caption" sx={{ color: 'text.secondary', textAlign: 'center' }}>
-              Steam : {player.steamUrl}
-            </Typography>
+            <Button
+              variant="outlined"
+              startIcon={<SportsEsportsIcon />}
+              href={player.steamUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ borderColor: '#4a90d9', color: '#4a90d9', width: '100%' }}
+            >
+              Profil Steam
+            </Button>
           )}
         </Box>
 

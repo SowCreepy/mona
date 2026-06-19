@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import type { FormEvent } from 'react';
-import { Box, Typography, TextField, IconButton, CircularProgress } from '@mui/material';
+import { Box, Typography, TextField, IconButton, CircularProgress, Tooltip, Link } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useChatRoomViewModel } from '../../viewmodels/useChatViewModel';
 import { useAuthStore } from '../../stores/authStore';
@@ -13,6 +14,7 @@ export default function ChatRoom() {
   const navigate = useNavigate();
   const { messages, loading, sendMessage, otherParticipant } = useChatRoomViewModel(chatId!);
   const userId = useAuthStore((s) => s.user?.id);
+  const steamUrl = useAuthStore((s) => s.user?.steamUrl);
   const [input, setInput] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -81,7 +83,13 @@ export default function ChatRoom() {
                   maxWidth: { xs: '75%', md: '55%' },
                 }}
               >
-                <Typography variant="body2">{msg.content}</Typography>
+                <Typography variant="body2" sx={{ wordBreak: 'break-word' }}>
+                  {msg.content.includes('steamcommunity.com') ? (
+                    <Link href={msg.content} target="_blank" rel="noopener noreferrer" sx={{ color: 'inherit', textDecorationColor: 'rgba(255,255,255,0.5)' }}>
+                      {msg.content}
+                    </Link>
+                  ) : msg.content}
+                </Typography>
                 <Typography variant="caption" sx={{ opacity: 0.6, display: 'block', textAlign: 'right', mt: 0.5 }}>
                   {new Date(msg.createdAt).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                 </Typography>
@@ -110,6 +118,16 @@ export default function ChatRoom() {
           size="small"
           autoComplete="off"
         />
+        {steamUrl && (
+          <Tooltip title="Envoyer mon lien Steam">
+            <IconButton
+              onClick={() => { sendMessage(steamUrl); }}
+              sx={{ color: '#4a90d9' }}
+            >
+              <SportsEsportsIcon />
+            </IconButton>
+          </Tooltip>
+        )}
         <IconButton type="submit" sx={{ color: '#7C6FFF' }}>
           <SendIcon />
         </IconButton>

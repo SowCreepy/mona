@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import { useNavigate } from 'react-router-dom';
 import { useProfileViewModel } from '../../viewmodels/useProfileViewModel';
 import { useMatchViewModel } from '../../viewmodels/useMatchViewModel';
@@ -72,6 +73,18 @@ export default function Profile() {
             Niveau {user.level} · ELO {user.elo}
           </Typography>
           <AvailabilityToggle isAvailable={user.isAvailable} onToggle={toggleAvailability} />
+          {user.steamUrl && (
+            <Button
+              variant="outlined"
+              startIcon={<SportsEsportsIcon />}
+              href={user.steamUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ borderColor: '#4a90d9', color: '#4a90d9', width: '100%' }}
+            >
+              Profil Steam
+            </Button>
+          )}
 
           <Box sx={{ display: 'flex', gap: 1, width: '100%', mt: 1 }}>
             <Button
